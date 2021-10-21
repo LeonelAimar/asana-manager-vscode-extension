@@ -1,0 +1,144 @@
+{
+    "name": "asana-manager",
+    "displayName": "Asana Manager",
+    "description": "Be always up to date with the non-finished asana tasks",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onView:asana-tasks-sidebar",
+        "onCommand:asana-manager.uncompletedTasks",
+        "onCommand:asana-manager.todayTasks",
+        "onCommand:asana-manager.auth",
+        "onCommand:asana-manager.whoAmI",
+        "onCommand:asana-manager.openWebview",
+        "onCommand:asana-manager.authRevoke",
+        "onCommand:asana-manager.getProjects",
+        "onCommand:asana-manager.getWorkspaces",
+        "onCommand:asana-manager.deleteWorkspace"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "asana-tasks-sidebar-view",
+                    "title": "Asana Manager",
+                    "icon": "media/AsanaLogo.svg"
+                }
+            ]
+        },
+        "views": {
+            "asana-tasks-sidebar-view": [
+                {
+                    "type": "webview",
+                    "id": "asana-tasks-sidebar",
+                    "name": "Asana Manager",
+                    "icon": "media/AsanaLogo.svg",
+                    "contextualTitle": "Asana Manager"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "asana-manager.uncompletedTasks",
+                "category": "Asana Manager",
+                "title": "Look for uncompleted tasks"
+            },
+            {
+                "command": "asana-manager.todayTasks",
+                "category": "Asana Manager",
+                "title": "Look for today tasks"
+            },
+            {
+                "command": "asana-manager.auth",
+                "category": "Asana Manager",
+                "title": "Authenticate"
+            },
+            {
+                "command": "asana-manager.whoAmI",
+                "category": "Asana Manager",
+                "title": "Who Am I?"
+            },
+            {
+                "command": "asana-manager.openWebview",
+                "category": "Asana Manager",
+                "title": "Open WebView"
+            },
+            {
+                "command": "asana-manager.authRevoke",
+                "category": "Asana Manager",
+                "title": "Deauthenticate"
+            },
+            {
+                "command": "asana-manager.getProjects",
+                "category": "Asana Manager",
+                "title": "List Projects"
+            },
+            {
+                "command": "asana-manager.getWorkspaces",
+                "category": "Asana Manager",
+                "title": "List workspaces"
+            },
+            {
+                "command": "asana-manager.deleteWorkspace",
+                "category": "Asana Manager",
+                "title": "Unlink from current workspace"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run package",
+        "compile": "webpack",
+        "watch": "webpack --watch --config ./webpack.config.js",
+        "watch-wb": "webpack --watch --config ./src/vue/webviews/webpack.config.js",
+        "watch-sidebar": "webpack --watch --config ./src/vue/sidebar/webpack.config.js",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "compile-tests": "tsc -p . --outDir out",
+        "watch-tests": "tsc -p -w . --outDir out",
+        "pretest": "npm run compile-tests && npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@intlify/vue-i18n-loader": "^3.2.0",
+        "@types/asana": "^0.18.4",
+        "@types/glob": "^7.1.4",
+        "@types/mocha": "^9.0.0",
+        "@types/node": "14.x",
+        "@types/polka": "^0.5.3",
+        "@types/vscode": "^1.60.0",
+        "@typescript-eslint/eslint-plugin": "^4.31.1",
+        "@typescript-eslint/parser": "^4.31.1",
+        "@vscode/test-electron": "^1.6.2",
+        "@vue/cli-plugin-babel": "^4.5.13",
+        "@vue/cli-plugin-typescript": "^4.5.13",
+        "@vue/cli-service": "^4.5.13",
+        "@vue/compiler-sfc": "^3.2.19",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^6.3.0",
+        "eslint": "^7.32.0",
+        "glob": "^7.1.7",
+        "mocha": "^9.1.1",
+        "sass": "^1.42.1",
+        "sass-loader": "^12.1.0",
+        "terser-webpack-plugin": "^5.2.4",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.4.3",
+        "vue-loader": "^16.8.1",
+        "webpack": "^5.52.1",
+        "webpack-cli": "^4.8.0"
+    },
+    "dependencies": {
+        "asana": "^0.18.6",
+        "axios": "^0.22.0",
+        "polka": "^0.5.2",
+        "vue": "^3.2.19",
+        "vue-i18n": "^9.2.0-beta.11",
+        "vue-router": "^4.0.11"
+    }
+}
