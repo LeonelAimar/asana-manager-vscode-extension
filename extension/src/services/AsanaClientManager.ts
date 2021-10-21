@@ -5,7 +5,7 @@ import { API_BASE_URL } from './constants';
 import { StateManager } from './StateManager';
 
 import { IAsanaCredentials, ICredentialsEncoded } from '../interfaces/CredentialInterface';
-import { ITask } from '../interfaces/TaskInterfaces';
+import { ISubTask, ITask } from '../interfaces/TaskInterfaces';
 
 export class AsanaClient {
     static client: asana.Client
@@ -78,16 +78,16 @@ export class AsanaClient {
     static async getAllTasks() {
         if ( !this.currentUser ) await this.setUser()
 
-        const test = await this.client.userTaskLists.getUserTaskListForUser('me', {
-            workspace: this.currentUser.workspaces[0].gid,
-            opt_fields: 'id,name,assignee_status,completed,due_on,completed_at,custom_fields,notes'
-        }) as any
+        // const test = await this.client.userTaskLists.getUserTaskListForUser('me', {
+        //     workspace: this.currentUser.workspaces[0].gid,
+        //     opt_fields: 'id,name,assignee_status,completed,due_on,completed_at,custom_fields,notes'
+        // }) as any
         // console.log(test)
-        const tasks = await this.client.userTaskLists.tasks(test.gid as string, {
-            completed_since: 'now',
-            opt_fields: 'id,name,assignee_status,completed,due_on,completed_at,custom_fields,notes'
-        })
-        console.log(tasks)
+        // const tasks = await this.client.userTaskLists.tasks(test.gid as string, {
+        //     completed_since: 'now',
+        //     opt_fields: 'id,name,assignee_status,completed,due_on,completed_at,custom_fields,notes'
+        // })
+        // console.log(tasks)
 
         return await this.client.tasks.findAll({
             assignee: Number(this.currentUser.gid),
@@ -105,12 +105,17 @@ export class AsanaClient {
         const fields = [
             'id','name','projects','projects.name','assignee_status','completed','due_on','completed_at',
             'custom_fields','notes','html_notes','followers','followers.name','followers.photo',
-            'permalink_url','tags','tags.name'
+            'permalink_url','tags','tags.name', 'num_subtasks'
         ]
 
-        const taskObject: ITask = await AsanaClient.client.tasks.findById(taskGid, {
-            opt_fields: fields.join(',')
+        const taskObject: ITask = await this.client.tasks.findById(taskGid, {
+                opt_fields: fields.join(',')
+            }, { headers: { 'Asana-Disable': 'new_user_task_lists' }
         })
+
+        if ( taskObject.num_subtasks && taskObject.num_subtasks > 0 )
+            taskObject.subtasks = await this.getSubtasks( taskObject.gid, [] )
+        
         return taskObject
     }
 
@@ -129,6 +134,23 @@ export class AsanaClient {
         } catch (err) {
             if ( shortUsersArray[index+1] ) return this.getUsers( index + 1, shortUsersArray, arrayToFill )
             return
+        }
+    }
+
+    static async getSubtasks( taskGid: string, arrayToFill: ISubTask[], nextPage: string | undefined = undefined ): Promise<ISubTask[]> {
+        try {
+            const params: asana.resources.Tasks.FindAllParams = {}
+
+            if ( nextPage ) params.offset = nextPage
+
+            const subtasks = await this.client.tasks.subtasks(taskGid) as asana.resources.ResourceList<ISubTask>
+
+            arrayToFill.push(...subtasks.data)
+
+            if ( subtasks._response.next_page === null ) return arrayToFill
+            else throw { offset: subtasks._response.next_page?.offset }
+        } catch (err: any) {
+            return this.getSubtasks( taskGid, arrayToFill, err.offset )
         }
     }
 
