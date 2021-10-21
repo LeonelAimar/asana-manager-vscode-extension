@@ -99,7 +99,8 @@ const methods: IAppMethods = {
             ) {
                 const messagesIsHigher = refs.messagesContainer.value.offsetHeight > refs.infoStoryContainer.value.offsetHeight
                 const refToBePersisted = messagesIsHigher ? refs.infoStoryContainer.value : refs.messagesContainer.value
-                const pxToTop = state.additional.storyInfoPxToTop - (window.scrollY + 40)
+                const sumPixels = state.tasks.task[0].tags.length > 0 ? 40 : 75
+                const pxToTop = state.additional.storyInfoPxToTop - (window.scrollY + sumPixels)
                 if ( pxToTop < 0 && refToBePersisted.offsetHeight < window.innerHeight ) refToBePersisted.setAttribute('style', `top: ${-pxToTop}px; position: relative;`)
                 else refToBePersisted.removeAttribute('style')
             }

@@ -103,9 +103,9 @@ export class AsanaClient {
 
     static async getTaskById( taskGid: string ) {
         const fields = [
-            'id','name','projects','assignee_status','completed','due_on','completed_at',
+            'id','name','projects','projects.name','assignee_status','completed','due_on','completed_at',
             'custom_fields','notes','html_notes','followers','followers.name','followers.photo',
-            'permalink_url','tags'
+            'permalink_url','tags','tags.name'
         ]
 
         const taskObject: ITask = await AsanaClient.client.tasks.findById(taskGid, {
