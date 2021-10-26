@@ -1,0 +1,20 @@
+org: leonelaimar
+service: asana-tasks-extension-api
+frameworkVersion: '2'
+
+package:
+  patterns:
+    - '!src/**'
+    - '!tsconfig.json'
+    - '!node_modules/@types/**'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi: '*'
