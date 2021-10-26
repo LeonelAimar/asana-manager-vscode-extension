@@ -9,43 +9,56 @@
                 @click.prevent="openExternal(String(Task[0].permalink_url))"
             >Open in browser</button>
         </header>
-        <div class="resourceAdditional">
-            <div class="lineInfo">
-                <span>Due on:</span>
-                <span 
-                    :class="{ 'outDated': AppState.tasks.isOutDate }"
-                >
-                    <Warning v-if="AppState.tasks.isOutDate" :width="32" :height="32" />
-                    {{ Task[0].due_on }}
-                </span>
-            </div>
-            <div class="lineInfo project" v-if="Task[0].projects.length! > 0">
-                <span>Project:</span>
-                <span class="projectLine"
-                    @click.prevent="openExternal( `https://app.asana.com/0/${Task[0].projects[0].gid}/board` )"
-                >
-                    {{ Task[0].projects[0].name }}
-                </span>
-            </div>
-            <div class="resourceTags" v-if="Task[0].tags.length > 0">
-                <span>Tags:</span>
-                <ul>
-                    <li v-for="tag in Task[0].tags">
-                        {{ tag.name }}
-                    </li>
-                </ul>
-            </div>
-            <div class="followersContainer">
-                <h2>Followers:</h2>
-                <ul class="followersList">
-                    <li v-for="follower in Task[0].followers" 
-                        class="followerCard" :data-user-id="follower.gid"
+        <div class="resourceAdditional"
+            :class="{ 'has-subtasks': Task[0].num_subtasks > 0 }"
+        >
+            <div>
+                <div class="lineInfo">
+                    <span>Due on:</span>
+                    <span 
+                        :class="{ 'outDated': AppState.tasks.isOutDate }"
                     >
-                        <img v-if="follower.photo" :src="follower.photo.image_60x60" :alt="follower.name" />
-                        <div v-else class="skeleton"></div>
-                        <h3>{{ follower.name }}</h3>
-                    </li>
-                </ul>
+                        <Warning v-if="AppState.tasks.isOutDate" :width="32" :height="32" />
+                        {{ Task[0].due_on }}
+                    </span>
+                </div>
+                <div class="lineInfo project" v-if="Task[0].projects.length! > 0">
+                    <span>Project:</span>
+                    <span class="projectLine"
+                        @click.prevent="openExternal( `https://app.asana.com/0/${Task[0].projects[0].gid}/board` )"
+                    >
+                        {{ Task[0].projects[0].name }}
+                    </span>
+                </div>
+                <div class="resourceTags" v-if="Task[0].tags.length > 0">
+                    <span>Tags:</span>
+                    <ul>
+                        <li v-for="tag in Task[0].tags">
+                            {{ tag.name }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="followersContainer">
+                    <h2>Followers:</h2>
+                    <ul class="followersList">
+                        <li v-for="follower in Task[0].followers" 
+                            class="followerCard" :data-user-id="follower.gid"
+                        >
+                            <img v-if="follower.photo" :src="follower.photo.image_60x60" :alt="follower.name" />
+                            <div v-else class="skeleton"></div>
+                            <h3>{{ follower.name }}</h3>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div v-if="Task[0].num_subtasks > 0">
+                <div class="subtasksTree">
+                    <div v-for="subtask in Task[0].subtasks"
+                        @click.prevent="openExternal( `${Task[0].permalink_url.slice(0, Task[0].permalink_url.lastIndexOf('/'))}/${subtask.gid}` )"
+                    >
+                        {{ subtask.name }}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="resourceDescription">
@@ -190,6 +203,54 @@ export default defineComponent({
 
     .resourceAdditional {
         margin-bottom: 1.5rem;
+        display: grid;
+        grid-template-columns: 1fr;
+
+        &.has-subtasks { 
+            grid-template-columns: 1fr 1fr;
+
+            > div:last-of-type {
+                position: relative;
+                &::before {
+                    position: absolute;
+                    content: "Subtasks Tree";
+                    width: auto;
+                    font-size: 1.8rem;
+                    bottom: 45%;
+                    left: -7rem;
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+
+        .subtasksTree {
+            padding: 1.5rem;
+            border-left: 1px solid #ccc;
+
+            > div {
+                font-size: 1.2rem;
+                padding: .5rem;
+                cursor: pointer;
+                border-radius: 1rem;
+                position: relative;
+                margin-top: .5rem;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    background-color: #ccc;
+                    left: -1.5rem;
+                    bottom: 50%;
+                    width: 1rem;
+                    height: 1px;
+                }
+
+                &:hover {
+                    background-color: var(--vscode-button-background);
+                }
+            }
+        }
+
 
         .lineInfo {
             display: flex;

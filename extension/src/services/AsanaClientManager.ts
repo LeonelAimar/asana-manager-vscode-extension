@@ -26,9 +26,9 @@ export class AsanaClient {
 
         try {
             const authData: ICredentialsEncoded = JSON.parse(StateManager.getToken() as string)
-            console.log(authData)
+            // console.log(authData)
             console.log('Now:', new Date(NOW).toLocaleTimeString())
-            console.log('Threshold:', new Date(authData.threshold).toLocaleTimeString())
+            // console.log('Threshold:', new Date(authData.threshold).toLocaleTimeString())
             console.log('Revokes:', new Date(authData.revokesOn).toLocaleTimeString())
 
             if ( NOW < authData.revokesOn && !this.client ) {

@@ -91,6 +91,7 @@ export class ViewPanel {
 
     public dispose() {
         ViewPanel.currentPanel = undefined;
+        ViewPanel.listenersSetted = false
 
         // Clean up our resources
         this._panel.dispose();
@@ -103,6 +104,7 @@ export class ViewPanel {
 
     private async _update() {
         const webview = this._panel.webview;
+        console.log('Updated', ViewPanel.listenersSetted)
 
         this._panel.webview.html = this._getHtmlForWebview(webview);
         if ( !ViewPanel.listenersSetted ) {
@@ -138,14 +140,12 @@ export class ViewPanel {
                         })
                         break;
                     case POST_MESSAGES_WV.GET_RESOURCE_TYPE:
-                        console.log(data)
                         this._panel.webview.postMessage({
                             type: 'setResourceType',
                             value: ViewPanel.showResource
                         })
                         break;
                     case POST_MESSAGES_WV.GET_USERS:
-                        console.log(data)
                         const { taskFollowers } = data.value
                         const users = await AsanaClient.getUsers( 0, data.value.users, [] )
                         this._panel.webview.postMessage({

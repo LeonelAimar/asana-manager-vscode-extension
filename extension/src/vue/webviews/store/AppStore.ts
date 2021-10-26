@@ -34,6 +34,7 @@ const state = reactive<AppState>({
 
 const methods: IAppMethods = {
     postMessage( messageType: POST_MESSAGES, payload?: any ) {
+        console.log('POSTED =>>', messageType)
         const msgPayload: { type: POST_MESSAGES, value?: any } = {
             type: messageType
         }
@@ -67,6 +68,7 @@ const methods: IAppMethods = {
                         break;
                     }
                     case 'setResourceType': {
+                        console.log('ResourceType =>>>', value)
                         state.resourceType = value
                         value === ResourceTypes.TASK && this.postMessage(POST_MESSAGES.GET_TASK)
                         break;
@@ -129,6 +131,8 @@ const methods: IAppMethods = {
         state.isLoading = true
         this.setListeners()
         this.postMessage(POST_MESSAGES.GET_RESOURCE_TYPE)
+
+        console.log('VUE MOUNTED')
     }
 }
 
