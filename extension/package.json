@@ -3,6 +3,7 @@
     "displayName": "Asana Manager",
     "description": "Be always up to date with the non-finished asana tasks",
     "publisher": "LeonelAimar",
+    "icon": "media/AsanaExtLogo.png",
     "repository": {
         "url": "https://github.com/LeonelAimar/asana-manager-vscode-extension"
     },
