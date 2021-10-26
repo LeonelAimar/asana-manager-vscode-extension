@@ -24,11 +24,7 @@ export async function activate(context: vscode.ExtensionContext) {
             "asana-tasks-sidebar",
             sidebarProvider
         )
-    );  
-
-    commands.push(vscode.commands.registerCommand('asana-manager.openWebview', async () => {
-        ViewPanel.createOrShow( context.extensionUri )
-    }))
+    )
 
     commands.push(vscode.commands.registerCommand('asana-manager.uncompletedTasks', async () => {
         try {

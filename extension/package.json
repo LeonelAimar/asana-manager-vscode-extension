@@ -15,7 +15,6 @@
         "onCommand:asana-manager.todayTasks",
         "onCommand:asana-manager.auth",
         "onCommand:asana-manager.whoAmI",
-        "onCommand:asana-manager.openWebview",
         "onCommand:asana-manager.authRevoke",
         "onCommand:asana-manager.getProjects",
         "onCommand:asana-manager.getWorkspaces",
@@ -63,11 +62,6 @@
                 "command": "asana-manager.whoAmI",
                 "category": "Asana Manager",
                 "title": "Who Am I?"
-            },
-            {
-                "command": "asana-manager.openWebview",
-                "category": "Asana Manager",
-                "title": "Open WebView"
             },
             {
                 "command": "asana-manager.authRevoke",
