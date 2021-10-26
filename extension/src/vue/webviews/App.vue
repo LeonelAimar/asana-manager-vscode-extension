@@ -459,7 +459,7 @@ export default defineComponent({
     }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1366px) {
     .resourceMessages {
         width: 100% !important;
     }
@@ -474,7 +474,7 @@ export default defineComponent({
     }
 }
 
-@media screen and (max-width: 956px) {
+@media screen and (max-width: 1024px) {
     .resourceMessages {
         width: 100% !important;
     }

@@ -10,7 +10,7 @@ import { sendWorkspace, SidebarPanel } from './services/SidebarPanel';
 // Interfaces
 import { ITask, IQuickPickTask } from './interfaces/TaskInterfaces'
 import { IQuickPickWorkspace } from './interfaces/WorkspaceInterfaces';
-import { IQuickPickProject } from './interfaces/ProjectInterfaces';
+import { IProject, IQuickPickProject } from './interfaces/ProjectInterfaces';
 
 export async function activate(context: vscode.ExtensionContext) {
     ViewPanel.extUri = context.extensionUri
@@ -47,8 +47,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 input.onDidChangeSelection( async (task) => {
                     input.busy = true
                     input.placeholder = 'Opening task...'
-                    const taskObject = await AsanaClient.getTaskById(task[0].gid)
-                    vscode.env.openExternal(Uri.parse(taskObject.permalink_url as string))
+                    // const taskObject = await AsanaClient.getTaskById(task[0].gid)
+                    // vscode.env.openExternal(Uri.parse(taskObject.permalink_url as string))
+                    ViewPanel.resourceId = task[0].gid
+                    ViewPanel.createOrShow()
                     input.hide()
                 })
 
@@ -136,9 +138,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 input.onDidChangeSelection( async (picked) => {
                     input.busy = true
-                    const project = await AsanaClient.client.projects.findById(picked[0].detail)
-                    console.log(project)
+                    const project: IProject = await AsanaClient.client.projects.findById(picked[0].detail)
                     // What do i do?
+                    vscode.env.openExternal(Uri.parse(project.permalink_url as string))
                     setTimeout(() => input.hide(), 1500)
                 })
 
@@ -174,8 +176,10 @@ export async function activate(context: vscode.ExtensionContext) {
                     input.onDidChangeSelection( async (task) => {
                         input.busy = true
                         input.placeholder = 'Opening task...'
-                        const taskObject = await AsanaClient.getTaskById(task[0].gid)
-                        vscode.env.openExternal(Uri.parse(taskObject.permalink_url as string))
+                        // const taskObject = await AsanaClient.getTaskById(task[0].gid)
+                        // vscode.env.openExternal(Uri.parse(taskObject.permalink_url as string))
+                        ViewPanel.resourceId = task[0].gid
+                        ViewPanel.createOrShow()
                         input.hide()
                     })
                     

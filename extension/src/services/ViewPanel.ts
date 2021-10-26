@@ -10,7 +10,7 @@ export class ViewPanel {
      * Track the currently panel. Only allow a single panel to exist at a time.
      */
     public static extUri: vscode.Uri;
-    public static showResource: ResourceTypes | undefined;
+    public static showResource: ResourceTypes | undefined = ResourceTypes.TASK;
     public static resourceId: string | number | undefined;
     public static listenersSetted: boolean = false
 

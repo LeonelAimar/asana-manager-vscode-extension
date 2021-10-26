@@ -5,3 +5,7 @@ export interface IQuickPickProject {
     detail:          string;
     description?:    string;
 }
+
+export interface IProject extends asana.resources.Projects.Type {
+    permalink_url?:         string;
+}
