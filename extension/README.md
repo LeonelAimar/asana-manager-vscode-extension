@@ -1,70 +1,46 @@
-# asana-s-tasks README
+# Asana Manager
 
-This is the README for your extension "asana-s-tasks". After writing up a brief description, we recommend including the following sections.
+Welcome to a kind of tiny manager for Asana. The idea of this extension is to simplify the workflow and improve your coding time between tasks, as you can get a little peek of each one without closing or minimizing VSCode.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* OAuth2 Authentication with Lambda non-server function. No need for Personal Tokens. Just easier.
+* Search for uncompleted tasks.
+* Search for today-uncompleted tasks.
+* Pretty Sidebar made up with Vue. ( For now, only auth and task searching  )
+* Full details of selected task, comming from sidebar or top command prompt.
+* Search for all projects and taking you to the Asana's project page.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> Please send some new ideas or new features to be developed to leoaimar22@gmail.com.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+NodeJS installed, obviously.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+No settings tab for now.
 
 ## Known Issues
 
 Calling out known issues can help limit users opening duplicate issues against your extension.
 
-## Release Notes
+## Commands
+* `Asana Manager: Look for today tasks` - Searchs for today uncompleted tasks
+* `Asana Manager: Look for uncompleted tasks` - Searchs for uncompleted tasks
+* `Asana Manager: Unlink from current workspace` - Getting rid of the workspace config.
+* `Asana Manager: Authenticate` - Starts OAuth flow.
+* `Asana Manager: Deauthenticate` - Revokes auth.
+* `Asana Manager: List projects` - Gets all projects on current workspace.
+* `Asana Manager: List workspaces` - Gets all workspaces and sets it as default.
+* `Asana Manager: Who Am I?` - Prompts an info message box telling who are you =D.
 
-Users appreciate release notes as you update your extension.
+## Release Notes
 
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release.
 
 -----------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
