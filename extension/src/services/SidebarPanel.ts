@@ -99,7 +99,7 @@ export class SidebarPanel implements vscode.WebviewViewProvider {
             vscode.Uri.joinPath(this._extensionUri, 'media', '224.VueSidebar.js')
         )
         const scriptUri2 = webview.asWebviewUri(
-            vscode.Uri.joinPath(this._extensionUri, 'media', '876.VueSidebar.js')
+            vscode.Uri.joinPath(this._extensionUri, 'media', '254.VueSidebar.js')
         )
 
         // const styleMainUri = webview.asWebviewUri(

@@ -65,6 +65,10 @@ export default defineComponent({
         width: 150px;
         margin-bottom: 1rem;
     }
+
+    h1 {
+        text-align: center;
+    }
 }
 
 .revokeAuthBtn {

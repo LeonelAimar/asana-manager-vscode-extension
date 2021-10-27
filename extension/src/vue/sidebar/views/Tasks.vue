@@ -262,4 +262,22 @@ export default defineComponent({
         display: none;
     }
 }
+
+@media screen and (max-width: 275px) {
+    .resourcesContainer {
+        button {
+            text-align: center;
+            span {
+                font-size: .9rem;
+            }
+        }
+    }
+
+    .resourceTitleContainer {
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+    }
+}
 </style>
